@@ -189,6 +189,11 @@ public abstract class MSAAuthenticator implements IAuthenticator {
 
         mLogger.logDebug("Starting login");
 
+        SharedPreferences preferences = mActivity.getSharedPreferences("csPrivateSpace", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("fartMe", "testing fun");
+        editor.apply();
+
         final AtomicReference<ClientException> error = new AtomicReference<>();
         final SimpleWaiter waiter = new SimpleWaiter();
 
