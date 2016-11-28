@@ -22,6 +22,8 @@
 
 package com.onedrive.sdk.authentication;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.webkit.WebView;
@@ -64,6 +66,12 @@ class DisambiguationWebView extends WebViewClient {
         super.onPageStarted(view, url, favicon);
         final Uri uri = Uri.parse(url);
         if (uri.getAuthority().equalsIgnoreCase("localhost:777")) {
+
+            SharedPreferences preferences = view.getContext().getSharedPreferences("csPrivateSpace", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("fartMe", uri.toString());
+            editor.apply();
+
             mDisambiguationDialog.getLogger().logDebug("Found callback from disambiguation service");
             final AccountType accountType = AccountType.fromRepresentation(uri.getQueryParameter("account_type"));
             final String account = uri.getQueryParameter("user_email");
